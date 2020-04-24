@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
+    <title>Register</title>
+</head>
+<body>
+<div class="container-fluid" style="height: 100vh">
+    <div class="row justify-content-center align-items-center h-100 pb-5">
+        <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3 text-center p-5 border bg-light rounded shadow">
+            <form th:action="@{/register}" th:object="${user}" th:method="@{post}">
+                <h1 class="h2 mb-3">Please sign in</h1>
+                <p class="text-danger" th:if="${registrationErrorMessage != null}"
+                   th:text="${registrationErrorMessage}">Validation error</p>
+                <div class="form-group">
+                    <label for="inputLogin" class="sr-only">Login</label>
+                    <input class="form-control" type="text" id="inputLogin" th:field="*{login}"
+                           placeholder="Login" required="" autofocus="">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input class="form-control" type="password" id="inputPassword" th:field="*{password}"
+                           placeholder="Password" required="">
+                </div>
+                <div class="form-group text-left">
+                    <label class="csr-only" for="listRoles"><h5>Roles</h5></label>
+                    <select class="selectpicker form-control" th:field="*{roles}" id="listRoles" multiple>
+                        <option th:each="role: ${selectableRoles}" th:value="${role.id}" th:text="${role.name}"
+                                th:id="${role.name}">Role
+                        </option>
+                    </select>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+            </form>
+            <p class="mt-5 mb-3 text-muted">© 2019-2020</p>
+        </div>
+    </div>
+    <div>
+        <form id="authenticationForm" method="post" th:action="@{/carhouse/user/room}">
+            <input id="token" type="hidden" name="authentication">
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script>
+
+    $('select').selectpicker();
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
+</body>
+</html>

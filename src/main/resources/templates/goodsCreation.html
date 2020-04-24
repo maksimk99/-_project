@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="${#themes.code('theme_css')}">
+</head>
+<body class="custom-color">
+<header>
+    <nav th:class="|navbar navbar-expand-lg ${#themes.code('background.color')}|">
+        <a class="navbar-brand" href="#">TradeSystem</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/goods" th:text="#{html.text.goods}">Goods <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/basket" th:text="#{html.text.basket}">Basket</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/order" th:text="#{html.text.orders}">Ordered</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="themeDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{html.text.theme}">
+                        Theme</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{''(theme=light)}"
+                           th:text="#{html.text.theme.light}">Action</a>
+                        <a class="dropdown-item" th:href="@{''(theme=dark)}"
+                           th:text="#{html.text.theme.dark}">Action</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{html.text.language}">
+                        Language</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{''(lang=en)}"
+                           th:text="#{html.text.language.english}">Action</a>
+                        <a class="dropdown-item" th:href="@{''(lang=ru)}"
+                           th:text="#{html.text.language.russian}">Action</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit();">
+                        <i class="material-icons">exit_to_app</i>
+                        <span class="align-top" th:text="#{html.text.logOut}">Log out</span></a></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="/goods/create" class="text-center border border-light p-5" method="post" th:object="${goods}"
+                  enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="goodsName" class="sr-only">Name</label>
+                    <input class="form-control" type="text" id="goodsName" th:field="*{name}"
+                           th:placeholder="#{html.text.placeholder.name}" required="" autofocus="">
+                    <td th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></td>
+                </div>
+                <div class="form-group">
+                    <label for="goodsDescription" class="sr-only">Description</label>
+                    <input class="form-control" type="text" id="goodsDescription" th:field="*{description}"
+                           th:placeholder="#{html.text.placeholder.description}" required="" autofocus="">
+                    <td th:errors="*{description}" th:if="${#fields.hasErrors('description')}"></td>
+                </div>
+                <div class="form-group">
+                    <label for="goodsPrice" class="sr-only">Price</label>
+                    <input class="form-control" type="number" id="goodsPrice" th:field="*{price}"
+                           th:placeholder="#{html.text.placeholder.price}" required="" autofocus="">
+                    <td th:errors="*{price}" th:if="${#fields.hasErrors('price')}"></td>
+                </div>
+                <div class="form-group">
+                    <label for="goodsQuantity" class="sr-only">Quantity</label>
+                    <input class="form-control" type="number" id="goodsQuantity" th:field="*{quantity}"
+                           th:placeholder="#{html.text.placeholder.quantity}" required="" autofocus="">
+                    <td th:errors="*{quantity}" th:if="${#fields.hasErrors('quantity')}"></td>
+                </div>
+                <div class="add-image">
+                    <div class="form-group">
+                        <div class="input-group input-file" name="multipartFile">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-choose" type="button">Choose</button>
+                            </span>
+                            <input type="text" class="form-control" placeholder='Choose a image...'/>
+                            <span class="input-group-btn">
+                                 <button class="btn btn-warning btn-reset" type="button">Reset</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-info btn-block my-4" type="submit" th:text="#{html.text.create}">create</button>
+            </form>
+        </div>
+    </div>
+</div>
+<form id="logoutForm" action="/logout" method="post">
+    <input value="Logout" type="hidden">
+</form>
+
+<script th:src="@{/js/main.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        bs_input_file();
+    });
+</script>
+</body>
+</html>
